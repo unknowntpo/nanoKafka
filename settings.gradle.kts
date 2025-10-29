@@ -12,3 +12,5 @@ plugins {
 
 rootProject.name = "nanoKafka"
 include("lib")
+include("client")
+include("server")

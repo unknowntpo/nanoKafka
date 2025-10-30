@@ -23,6 +23,10 @@ dependencies {
 
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation(libs.guava)
+
+    // Lombok for boilerplate reduction
+    compileOnly(libs.lombok)
+    annotationProcessor(libs.lombok)
 }
 
 // Apply a specific Java toolchain to ease working on different environments.

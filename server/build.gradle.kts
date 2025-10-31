@@ -3,6 +3,7 @@ plugins {
     id("java")
     signing
     id("com.vanniktech.maven.publish") version "0.30.0"
+    id("com.google.protobuf") version "0.9.4"
 }
 
 repositories {
@@ -12,6 +13,13 @@ repositories {
 dependencies {
     // Depend on the lib module for core Kafka components
     implementation(project(":lib"))
+
+    // gRPC dependencies
+    implementation(libs.grpc.netty.shaded)
+    implementation(libs.grpc.protobuf)
+    implementation(libs.grpc.stub)
+    implementation(libs.protobuf.java)
+    compileOnly(libs.javax.annotation.api)
 
     // Use JUnit Jupiter for testing
     testImplementation(libs.junit.jupiter)
@@ -46,6 +54,25 @@ tasks.jar {
     // Create a fat JAR with all dependencies
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
+}
+
+// Protobuf configuration
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:${libs.versions.protobuf.get()}"
+    }
+    plugins {
+        create("grpc") {
+            artifact = "io.grpc:protoc-gen-grpc-java:${libs.versions.grpc.get()}"
+        }
+    }
+    generateProtoTasks {
+        all().forEach { task ->
+            task.plugins {
+                create("grpc")
+            }
+        }
+    }
 }
 
 // Maven publishing configuration

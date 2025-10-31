@@ -2,6 +2,7 @@ package io.github.unknowntpo;
 
 import org.junit.jupiter.api.Test;
 
+import java.time.Instant;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -10,8 +11,8 @@ class LogSegmentTest {
     @Test
     void testAppendToLogSegment() {
         var segment = new LogSegment("0000.log", new ArrayList<>());
-        Record record0 = new Record("hello", "world");
-        Record record1 = new Record("abc", "def");
+        Record record0 = new Record("hello", "world", Instant.now().toEpochMilli());
+        Record record1 = new Record("abc", "def", Instant.now().toEpochMilli());
 
         segment.appendRecord(record0);
         segment.appendRecord(record1);

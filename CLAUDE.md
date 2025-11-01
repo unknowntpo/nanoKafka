@@ -92,7 +92,7 @@ nanoKafka/
 **server** - Broker server (PUBLISHED to Maven):
 - Package: `io.github.unknowntpo.server`
 - Published as `io.github.unknowntpo:nano-kafka-server:0.1.0`
-- Main class: `io.github.unknowntpo.server.KafkaBroker`
+- Main class: `io.github.unknowntpo.nanokafka.server.KafkaBroker`
 - Depends on `lib` module for core components
 - Builds as executable fat JAR with all dependencies bundled
 - Output: `server/build/libs/server-0.1.0.jar` (7.9MB), `server-0.1.0-sources.jar`

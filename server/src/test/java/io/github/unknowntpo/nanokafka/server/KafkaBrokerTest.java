@@ -1,4 +1,4 @@
-package io.github.unknowntpo.server;
+package io.github.unknowntpo.nanokafka.server;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

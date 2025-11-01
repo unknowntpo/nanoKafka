@@ -1,9 +1,9 @@
-package io.github.unknowntpo.server;
+package io.github.unknowntpo.nanokafka.server;
 
-import io.github.unknowntpo.server.grpc.KafkaBrokerServiceGrpc;
-import io.github.unknowntpo.server.grpc.ProducerRequest;
-import io.github.unknowntpo.server.grpc.ProducerResponse;
-import io.github.unknowntpo.server.grpc.Record;
+import io.github.unknowntpo.nanokafka.server.grpc.KafkaBrokerServiceGrpc;
+import io.github.unknowntpo.nanokafka.server.grpc.ProduceRequest;
+import io.github.unknowntpo.nanokafka.server.grpc.ProduceResponse;
+import io.github.unknowntpo.nanokafka.server.grpc.Record;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import org.junit.jupiter.api.Test;
@@ -23,7 +23,7 @@ class KafkaBrokerServiceTest {
     static final int SERVER_PORT = 50051;
 
     @Test
-    void testProducerRequest() throws Exception {
+    void testProduceRequest() throws Exception {
         // Create a channel to the server
         ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", SERVER_PORT)
             .usePlaintext()
@@ -42,13 +42,13 @@ class KafkaBrokerServiceTest {
                 .build();
 
             // Create producer request
-            ProducerRequest request = ProducerRequest.newBuilder()
+            ProduceRequest request = ProduceRequest.newBuilder()
                 .setTopicName("test-topic")
                 .setRecord(record)
                 .build();
 
             // Send request
-            ProducerResponse response = stub.producer(request);
+            ProduceResponse response = stub.produce(request);
 
             // Verify response
             assertTrue(response.getSuccess(), "Producer request should succeed");

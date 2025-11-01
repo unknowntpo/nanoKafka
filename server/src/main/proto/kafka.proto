@@ -3,23 +3,23 @@ syntax = "proto3";
 package io.github.unknowntpo.server;
 
 option java_multiple_files = true;
-option java_package = "io.github.unknowntpo.server.grpc";
+option java_package = "io.github.unknowntpo.nanokafka.server.grpc";
 option java_outer_classname = "KafkaProto";
 
 // Kafka broker service
 service KafkaBrokerService {
   // Producer sends a record to a topic
-  rpc Producer(ProducerRequest) returns (ProducerResponse);
+  rpc Produce(ProduceRequest) returns (ProduceResponse);
 }
 
 // Request to produce a record
-message ProducerRequest {
+message ProduceRequest {
   string topic_name = 1;
   Record record = 2;
 }
 
 // Response from producing a record
-message ProducerResponse {
+message ProduceResponse {
   bool success = 1;
   string message = 2;
 }

@@ -1,4 +1,4 @@
-package io.github.unknowntpo.server;
+package io.github.unknowntpo.nanokafka.server;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;

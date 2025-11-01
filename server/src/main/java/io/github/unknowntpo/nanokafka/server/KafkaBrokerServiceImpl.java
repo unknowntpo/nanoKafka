@@ -1,8 +1,8 @@
-package io.github.unknowntpo.server;
+package io.github.unknowntpo.nanokafka.server;
 
-import io.github.unknowntpo.server.grpc.KafkaBrokerServiceGrpc;
-import io.github.unknowntpo.server.grpc.ProducerRequest;
-import io.github.unknowntpo.server.grpc.ProducerResponse;
+import io.github.unknowntpo.nanokafka.server.grpc.KafkaBrokerServiceGrpc;
+import io.github.unknowntpo.nanokafka.server.grpc.ProduceRequest;
+import io.github.unknowntpo.nanokafka.server.grpc.ProduceResponse;
 import io.grpc.stub.StreamObserver;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -20,10 +20,10 @@ public class KafkaBrokerServiceImpl extends KafkaBrokerServiceGrpc.KafkaBrokerSe
     private final ConcurrentMap<String, io.github.unknowntpo.LogSegment> topics = new ConcurrentHashMap<>();
 
     @Override
-    public void producer(ProducerRequest request, StreamObserver<ProducerResponse> responseObserver) {
+    public void produce(ProduceRequest request, StreamObserver<ProduceResponse> responseObserver) {
         try {
             String topicName = request.getTopicName();
-            io.github.unknowntpo.server.grpc.Record grpcRecord = request.getRecord();
+            io.github.unknowntpo.nanokafka.server.grpc.Record grpcRecord = request.getRecord();
 
             logger.info("Received producer request for topic: " + topicName);
 
@@ -47,7 +47,7 @@ public class KafkaBrokerServiceImpl extends KafkaBrokerServiceGrpc.KafkaBrokerSe
                        ", total records: " + logSegment.recordSize());
 
             // Build success response
-            ProducerResponse response = ProducerResponse.newBuilder()
+            ProduceResponse response = ProduceResponse.newBuilder()
                 .setSuccess(true)
                 .setMessage("Record appended successfully to topic: " + topicName)
                 .build();
@@ -58,7 +58,7 @@ public class KafkaBrokerServiceImpl extends KafkaBrokerServiceGrpc.KafkaBrokerSe
         } catch (Exception e) {
             logger.severe("Error processing producer request: " + e.getMessage());
 
-            ProducerResponse response = ProducerResponse.newBuilder()
+            ProduceResponse response = ProduceResponse.newBuilder()
                 .setSuccess(false)
                 .setMessage("Error: " + e.getMessage())
                 .build();
